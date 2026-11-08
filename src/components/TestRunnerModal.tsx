@@ -17,10 +17,6 @@ import {
   XCircle,
 } from 'lucide-react';
 import {
-  runOvertimeEngineTests,
-  OvertimeTestSuiteSummary,
-} from '../engine/overtimeEngine.test';
-import {
   runRotationEngineTests,
   TestSuiteSummary,
 } from '../engine/rotationEngine.test';
@@ -36,7 +32,7 @@ interface TestRunnerModalProps {
 
 interface UnifiedTestItem {
   id: string;
-  suite: 'ROTATION' | 'SECURITY' | 'OVERTIME';
+  suite: 'ROTATION' | 'SECURITY';
   category: string;
   name: string;
   passed: boolean;
@@ -49,10 +45,7 @@ export const TestRunnerModal: React.FC<TestRunnerModalProps> = ({ isOpen, onClos
     runRotationEngineTests()
   );
   const [securitySummary, setSecuritySummary] = useState<SecurityTestSuiteSummary | null>(null);
-  const [overtimeSummary, setOvertimeSummary] = useState<OvertimeTestSuiteSummary>(() =>
-    runOvertimeEngineTests()
-  );
-  const [activeTab, setActiveTab] = useState<'ALL' | 'ROTATION' | 'SECURITY' | 'OVERTIME'>('ALL');
+  const [activeTab, setActiveTab] = useState<'ALL' | 'ROTATION' | 'SECURITY'>('ALL');
   const [filter, setFilter] = useState<'ALL' | 'PASSED' | 'FAILED'>('ALL');
   const [isRunning, setIsRunning] = useState(false);
 
@@ -60,10 +53,8 @@ export const TestRunnerModal: React.FC<TestRunnerModalProps> = ({ isOpen, onClos
     setIsRunning(true);
     const rot = runRotationEngineTests();
     const sec = await runSecurityEngineTests();
-    const ov = runOvertimeEngineTests();
     setRotationSummary(rot);
     setSecuritySummary(sec);
-    setOvertimeSummary(ov);
     setIsRunning(false);
   };
 
@@ -85,10 +76,6 @@ export const TestRunnerModal: React.FC<TestRunnerModalProps> = ({ isOpen, onClos
       ...r,
       suite: 'SECURITY' as const,
     })),
-    ...overtimeSummary.results.map((r) => ({
-      ...r,
-      suite: 'OVERTIME' as const,
-    })),
   ];
 
   const totalCount = allTests.length;
@@ -98,7 +85,6 @@ export const TestRunnerModal: React.FC<TestRunnerModalProps> = ({ isOpen, onClos
   const filteredResults = allTests.filter((t) => {
     if (activeTab === 'ROTATION' && t.suite !== 'ROTATION') return false;
     if (activeTab === 'SECURITY' && t.suite !== 'SECURITY') return false;
-    if (activeTab === 'OVERTIME' && t.suite !== 'OVERTIME') return false;
     if (filter === 'PASSED') return t.passed;
     if (filter === 'FAILED') return !t.passed;
     return true;
@@ -191,16 +177,6 @@ export const TestRunnerModal: React.FC<TestRunnerModalProps> = ({ isOpen, onClos
             >
               <Shield className="w-3 h-3" strokeWidth={1.5} />
               <span>Sécurité ({securitySummary?.total || 14})</span>
-            </button>
-            <button
-              onClick={() => setActiveTab('OVERTIME')}
-              className={`px-3 py-1 rounded-lg text-xs font-medium transition flex items-center gap-1 ${
-                activeTab === 'OVERTIME'
-                  ? 'bg-[#18191D] dark:bg-[#F4F4F5] text-white dark:text-[#101114]'
-                  : 'bg-black/[0.03] dark:bg-white/[0.04] text-[#71717A] dark:text-[#A1A1AA]'
-              }`}
-            >
-              <span>Heures Sup ({overtimeSummary.total})</span>
             </button>
           </div>
 

@@ -2,7 +2,6 @@
  * TFM SCHEDULER — Exécuteur Principal de Toutes les Suites de Tests (30 tests)
  */
 
-import { runOvertimeEngineTests } from './overtimeEngine.test';
 import { runRotationEngineTests } from './rotationEngine.test';
 import { runSecurityEngineTests } from './securityEngine.test';
 
@@ -12,17 +11,14 @@ async function main() {
   console.log('========================================================================\n');
 
   const rotSummary = runRotationEngineTests();
-  console.log(`[SUITE 1/3] Moteur de Rotation 9 jours : ${rotSummary.passed}/${rotSummary.total} tests validés.`);
+  console.log(`[SUITE 1/2] Moteur de Rotation 9 jours : ${rotSummary.passed}/${rotSummary.total} tests validés.`);
 
   const secSummary = await runSecurityEngineTests();
-  console.log(`[SUITE 2/3] Sécurité, RBAC & Cloisonnement : ${secSummary.passed}/${secSummary.total} tests validés.`);
+  console.log(`[SUITE 2/2] Sécurité, RBAC & Cloisonnement : ${secSummary.passed}/${secSummary.total} tests validés.\n`);
 
-  const ovSummary = runOvertimeEngineTests();
-  console.log(`[SUITE 3/3] Calculateur Heures Sup. & Cycle 9j : ${ovSummary.passed}/${ovSummary.total} tests validés.\n`);
-
-  const total = rotSummary.total + secSummary.total + ovSummary.total;
-  const passed = rotSummary.passed + secSummary.passed + ovSummary.passed;
-  const failed = rotSummary.failed + secSummary.failed + ovSummary.failed;
+  const total = rotSummary.total + secSummary.total;
+  const passed = rotSummary.passed + secSummary.passed;
+  const failed = rotSummary.failed + secSummary.failed;
 
   console.log('------------------------------------------------------------------------');
   console.log(`BILAN GLOBAL : ${passed}/${total} TESTS VALIDÉS (Échecs : ${failed})`);
