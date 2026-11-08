@@ -32,6 +32,7 @@ import {
 } from '../engine/rotationEngine';
 import { Announcement, CycleDayInfo, RotationTeamId } from '../types';
 import { LiquidGlassCard } from './LiquidGlassCard';
+import { SyncStatusIndicator } from './SyncStatusIndicator';
 
 interface HomeDashboardProps {
   onSelectAnnouncement: (announcement: Announcement) => void;
@@ -136,6 +137,9 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
           </span>
         </div>
       </div>
+
+      {/* INDICATEUR VISUEL DE SYNCHRONISATION LOCALE (ROTATIONS & ANNONCES) */}
+      <SyncStatusIndicator />
 
       {/* BANNIÈRE DE SÉCURITÉ : Bulletin de paie reçu dans le coffre-fort */}
       {isAwaitingVerification && (
