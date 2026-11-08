@@ -32,6 +32,7 @@ import {
 } from '../engine/rotationEngine';
 import { Announcement, CycleDayInfo, RotationTeamId } from '../types';
 import { LiquidGlassCard } from './LiquidGlassCard';
+import { OvertimeCalculatorCard } from './OvertimeCalculatorCard';
 
 interface HomeDashboardProps {
   onSelectAnnouncement: (announcement: Announcement) => void;
@@ -522,6 +523,9 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
           </div>
         </div>
       </LiquidGlassCard>
+
+      {/* 3B. CALCULATEUR DES HEURES SUPPLÉMENTAIRES (CYCLE 9 JOURS) */}
+      <OvertimeCalculatorCard currentDayInfo={todayDayInfo} />
 
       {/* 3. APERÇU DU CALENDRIER (SÉLECTEUR HORIZONTAL COMPACT) */}
       <div className="space-y-3">
