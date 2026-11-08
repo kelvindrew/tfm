@@ -46,7 +46,6 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
     user,
     shiftConfig,
     selectedTeam,
-    setRotationTeam,
     announcements,
     setActiveTab,
     allImportedPaySlips,
@@ -196,25 +195,11 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
               </div>
             </div>
 
-            {/* Sélecteur rapide d'équipe (A / B / C) & Jauge */}
+            {/* Badge Équipe d'affectation & Jauge de cycle */}
             <div className="flex items-center gap-2 shrink-0">
-              <div className="flex items-center p-0.5 rounded-xl bg-black/[0.04] dark:bg-white/[0.06] border border-black/[0.04] dark:border-white/[0.05]">
-                {(['A', 'B', 'C'] as RotationTeamId[]).map((tId) => (
-                  <button
-                    key={tId}
-                    type="button"
-                    onClick={() => setRotationTeam(tId)}
-                    title={`Basculer sur l'Équipe ${tId}`}
-                    className={`px-2.5 py-1 rounded-lg text-xs font-semibold font-mono transition-all ${
-                      (selectedTeam || 'A') === tId
-                        ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 shadow-xs'
-                        : 'text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100'
-                    }`}
-                  >
-                    Eq. {tId}
-                  </button>
-                ))}
-              </div>
+              <span className="px-2.5 py-1.5 rounded-xl bg-zinc-100 dark:bg-zinc-800/80 border border-black/[0.04] dark:border-white/[0.06] text-xs font-semibold font-mono text-zinc-800 dark:text-zinc-200">
+                Équipe {selectedTeam || 'A'}
+              </span>
 
               <div className="flex items-baseline gap-1 px-3 py-1.5 rounded-xl bg-zinc-100 dark:bg-zinc-800/80 border border-black/[0.04] dark:border-white/[0.06]">
                 <span className="text-xs font-mono font-medium text-zinc-500 dark:text-zinc-400">
@@ -355,14 +340,12 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
               const isOff = ts.shiftType === 'OFF';
 
               return (
-                <button
+                <div
                   key={ts.team}
-                  type="button"
-                  onClick={() => setRotationTeam(ts.team)}
                   className={`p-3 rounded-xl border text-left transition-all relative ${
                     isSelected
-                      ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 border-transparent shadow-xs ring-2 ring-emerald-500/60'
-                      : 'bg-black/[0.02] dark:bg-white/[0.02] border-black/[0.05] dark:border-white/[0.07] text-zinc-900 dark:text-zinc-100 hover:border-black/20 dark:hover:border-white/20'
+                      ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 border-transparent shadow-xs ring-1 ring-emerald-500/50'
+                      : 'bg-black/[0.02] dark:bg-white/[0.02] border-black/[0.05] dark:border-white/[0.07] text-zinc-900 dark:text-zinc-100'
                   }`}
                 >
                   <div className="flex items-center justify-between gap-2 mb-1.5">
@@ -397,7 +380,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
                   <p className={`text-[10px] mt-1 truncate ${isSelected ? 'opacity-80' : 'text-zinc-500 dark:text-zinc-400'}`}>
                     {ts.shiftLabel}
                   </p>
-                </button>
+                </div>
               );
             })}
           </div>
