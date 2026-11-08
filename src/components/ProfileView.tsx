@@ -12,6 +12,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Bell,
+  Calendar,
   Check,
   ChevronRight,
   FileText,
@@ -432,18 +433,23 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
         </div>
       </LiquidGlassCard>
 
-      {/* 6. MODÈLE DE ROTATION & HORAIRES DES QUARTS */}
-      <LiquidGlassCard variant="default" className="p-5 sm:p-6 space-y-5">
-        <div>
-          <span className="text-[10px] font-semibold uppercase tracking-wider text-[#71717A] dark:text-[#A1A1AA]">
-            Rythme Opérationnel
-          </span>
-          <h3 className="text-base font-semibold text-[#18191D] dark:text-[#F4F4F5] mt-0.5">
-            Modèle de Rotation & Shift
-          </h3>
-          <p className="text-xs text-[#71717A] dark:text-[#A1A1AA] mt-0.5">
-            Sélectionnez votre cycle de travail : 6/3 (TFM 9 jours), 5/2 (Semaine 7 jours) ou 10/4 (Quinzaine 14 jours).
-          </p>
+      {/* 6. CONFIGURATION DU CALENDRIER & MODÈLE DE ROTATION */}
+      <LiquidGlassCard variant="default" className="p-5 sm:p-6 space-y-5 border-blue-500/20">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <div className="flex items-center gap-1.5">
+              <Calendar className="w-4 h-4 text-blue-500 shrink-0" />
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400 font-mono">
+                Configuration du Calendrier
+              </span>
+            </div>
+            <h3 className="text-base font-semibold text-[#18191D] dark:text-[#F4F4F5] mt-1">
+              Paramètres de Rotation & Équipe
+            </h3>
+            <p className="text-xs text-[#71717A] dark:text-[#A1A1AA] mt-0.5 leading-relaxed">
+              Toutes les configurations de votre calendrier sont centralisées ici : choix de votre équipe d'affectation (A, B, C), modèle de rotation TFM (10/4, 6/3, 5/2), date de référence et horaires de quart.
+            </p>
+          </div>
         </div>
 
         {/* Sélecteur de l'Équipe d'Affectation (A, B, C) */}

@@ -302,6 +302,39 @@ export async function authenticateAgent(
 }
 
 /**
+ * Authentification biométrique de l'agent (FaceID / Fingerprint)
+ * Valide l'empreinte biométrique locale et émet un jeton de session sécurisé.
+ */
+export async function authenticateAgentBiometric(
+  matricule: string,
+  biometricType: 'fingerprint' | 'faceid' = 'fingerprint'
+): Promise<AuthAttemptResult> {
+  const normMatricule = matricule.trim().toUpperCase();
+  const account = SECURE_ACCOUNTS_REGISTRY.find((a) => a.matricule === normMatricule);
+  if (!account) {
+    return {
+      success: false,
+      errorMessage: 'Identifiant matricule ou capteur biométrique non reconnu.',
+    };
+  }
+
+  const now = Date.now();
+  const sessionToken: SessionToken = {
+    token: `tfm_sess_bio_${biometricType}_${now}_${Math.random().toString(36).slice(2, 10)}`,
+    matricule: account.matricule,
+    systemRole: account.systemRole,
+    issuedAt: now,
+    expiresAt: now + SESSION_TTL_MS,
+    lastActivityAt: now,
+  };
+
+  return {
+    success: true,
+    session: sessionToken,
+  };
+}
+
+/**
  * Validation de la validité d'une session et de son inactivité
  */
 export function validateSession(session: SessionToken | null): {

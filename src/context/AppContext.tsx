@@ -17,6 +17,7 @@ import { BATCH_IMPORTED_PAYSLIPS, OFFICIAL_PDF_ASSET_PATH } from '../engine/payr
 import { DEFAULT_SHIFT_CONFIG, getCalibratedConfig } from '../engine/rotationEngine';
 import {
   authenticateAgent,
+  authenticateAgentBiometric,
   checkPermission,
   Permission,
   requestPayslipGrant,
@@ -67,6 +68,13 @@ interface AppContextType {
     matricule: string,
     secret: string
   ) => Promise<{ success: boolean; errorMessage?: string }>;
+  loginWithBiometrics: (
+    matricule: string,
+    biometricType?: 'fingerprint' | 'faceid',
+    unlockPaySlipsImmediately?: boolean
+  ) => Promise<{ success: boolean; errorMessage?: string }>;
+  isBiometricEnabledForPayslips: boolean;
+  setIsBiometricEnabledForPayslips: (enabled: boolean) => void;
   logout: () => void;
   hasPermission: (permission: Permission) => boolean;
 
@@ -603,6 +611,81 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return { success: true };
   };
 
+  const [isBiometricEnabledForPayslips, setIsBiometricEnabledForPayslipsState] = useState<boolean>(() => {
+    const saved = localStorage.getItem('tfm_biometric_payslips');
+    return saved !== null ? saved === 'true' : true;
+  });
+
+  const setIsBiometricEnabledForPayslips = (enabled: boolean) => {
+    setIsBiometricEnabledForPayslipsState(enabled);
+    localStorage.setItem('tfm_biometric_payslips', String(enabled));
+  };
+
+  const loginWithBiometrics = async (
+    matricule: string,
+    biometricType: 'fingerprint' | 'faceid' = 'fingerprint',
+    unlockPaySlipsImmediately: boolean = false
+  ): Promise<{ success: boolean; errorMessage?: string }> => {
+    const res = await authenticateAgentBiometric(matricule, biometricType);
+    if (!res.success || !res.session) {
+      return {
+        success: false,
+        errorMessage: res.errorMessage || 'Échec de la validation biométrique.',
+      };
+    }
+
+    const session = res.session;
+    setSessionToken(session);
+    setIsLoggedIn(true);
+    setLastActivityTimestamp(Date.now());
+
+    let nextRole: UserRole = session.systemRole;
+    let nextTitle = 'Opérateur';
+    let nextName = session.matricule;
+    let nextDept = 'Opérations Minières & Hydrométallurgie';
+
+    const foundInBatch = BATCH_IMPORTED_PAYSLIPS.find(
+      (s) => s.matricule.toUpperCase() === session.matricule.toUpperCase()
+    );
+
+    if (foundInBatch) {
+      nextName = foundInBatch.agentName;
+      nextTitle = foundInBatch.jobTitle || foundInBatch.grade;
+      nextDept = foundInBatch.department;
+    } else if (session.matricule === 'TFM-ADMIN') {
+      nextTitle = 'Administrateur RH & Rémunérations';
+      nextName = 'Direction RH TFM / TIA WFS';
+      nextDept = 'Ressources Humaines & Paie';
+    } else if (session.matricule === 'TFM-9012') {
+      nextTitle = 'Superviseur de Quart Usine';
+      nextName = 'Ilunga Mwamba';
+    } else if (session.matricule === 'TFM-1102') {
+      nextTitle = 'Coordinateur Sécurité & Prévention';
+      nextName = 'Direction Sécurité HSE';
+    } else if (session.matricule === 'TFM-4821') {
+      nextTitle = 'Opérateur Salle de Contrôle - Usine SX-EW';
+      nextName = 'Patrick Mukendi Ilunga';
+    }
+
+    updateUser({
+      matricule: session.matricule,
+      systemRole: nextRole,
+      role: nextTitle,
+      fullName: nextName,
+      department: nextDept,
+    });
+
+    if (unlockPaySlipsImmediately || isBiometricEnabledForPayslips) {
+      const agentDigits = session.matricule.replace(/[^0-9]/g, '').slice(-4) || '4821';
+      const grantRes = await requestPayslipGrant(session, agentDigits);
+      if (grantRes.success && grantRes.grant) {
+        setPayslipGrant(grantRes.grant);
+      }
+    }
+
+    return { success: true };
+  };
+
   const logout = () => {
     setIsLoggedIn(false);
     setSessionToken(null);
@@ -1110,6 +1193,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         isLoggedIn,
         sessionToken,
         loginWithCredentials,
+        loginWithBiometrics,
+        isBiometricEnabledForPayslips,
+        setIsBiometricEnabledForPayslips,
         logout,
         hasPermission,
         lastActivityTimestamp,
