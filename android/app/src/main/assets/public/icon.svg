@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="metalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="50%" stop-color="#D1D5DB"/>
+      <stop offset="100%" stop-color="#9CA3AF"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background with Apple squircle radius -->
+  <rect width="512" height="512" rx="116" fill="#101114"/>
+  <rect width="510" height="510" x="1" y="1" rx="115" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+
+  <!-- Minimalist Precision Hexagon Ring -->
+  <polygon points="256,96 392,176 392,336 256,416 120,336 120,176" 
+           fill="none" 
+           stroke="url(#metalGrad)" 
+           stroke-width="12" 
+           stroke-linejoin="round"
+           opacity="0.9"/>
+
+  <!-- Subtle 9-segment dots indicator -->
+  <circle cx="256" cy="116" r="6" fill="#FFFFFF"/>
+  <circle cx="340" cy="154" r="5" fill="rgba(255,255,255,0.7)"/>
+  <circle cx="380" cy="230" r="5" fill="rgba(255,255,255,0.7)"/>
+  <circle cx="370" cy="320" r="5" fill="rgba(255,255,255,0.5)"/>
+  <circle cx="310" cy="386" r="5" fill="rgba(255,255,255,0.5)"/>
+  <circle cx="210" cy="390" r="5" fill="rgba(255,255,255,0.4)"/>
+  <circle cx="146" cy="330" r="5" fill="rgba(255,255,255,0.3)"/>
+  <circle cx="134" cy="240" r="5" fill="rgba(255,255,255,0.3)"/>
+  <circle cx="176" cy="156" r="5" fill="rgba(255,255,255,0.3)"/>
+
+  <!-- Central TFM Monogram -->
+  <text x="256" y="274" 
+        font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', sans-serif" 
+        font-size="68" 
+        font-weight="700" 
+        letter-spacing="6"
+        text-anchor="middle" 
+        fill="#F5F5F5">TFM</text>
+  
+  <!-- Subtitle SCHEDULER -->
+  <text x="256" y="306" 
+        font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', sans-serif" 
+        font-size="16" 
+        font-weight="500" 
+        letter-spacing="6"
+        text-anchor="middle" 
+        fill="#92959D">SCHEDULER</text>
+</svg>

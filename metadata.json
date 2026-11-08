@@ -1,0 +1,6 @@
+{
+  "name": "TFM Scheduler",
+  "description": "Application mobile pour le personnel de Tenke Fungurume Mining (TFM) : suivi des rotations 9 jours, calendrier hors-ligne, annonces HSE, messagerie d'équipe et fiches de paie sécurisées.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

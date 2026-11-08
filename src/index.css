@@ -1,0 +1,116 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --bg-main: #F4F4F5;
+  --bg-secondary: #FFFFFF;
+  --bg-surface: #FFFFFF;
+  --text-primary: #18191D;
+  --text-secondary: #71717A;
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --accent-neutral: #71717A;
+}
+
+.dark {
+  --bg-main: #101114;
+  --bg-secondary: #18191D;
+  --bg-surface: #202227;
+  --text-primary: #F4F4F5;
+  --text-secondary: #A1A1AA;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --accent-neutral: #A1A1AA;
+}
+
+@layer base {
+  body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Inter", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overscroll-behavior-y: none;
+    letter-spacing: -0.012em;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+}
+
+/* Safe area insets for mobile notched displays & Android gesture bars */
+.pt-safe {
+  padding-top: max(env(safe-area-inset-top, 0px), 12px);
+}
+
+.pb-safe {
+  padding-bottom: max(env(safe-area-inset-bottom, 0px), 16px);
+}
+
+.safe-top-spacer {
+  height: max(env(safe-area-inset-top, 0px), 0px);
+}
+
+.safe-bottom-spacer {
+  height: max(env(safe-area-inset-bottom, 0px), 0px);
+}
+
+/* Subtle Apple Liquid Glass Accent (reserved for top nav, bottom nav, and hero elevation) */
+.liquid-glass {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 12px -2px rgba(0, 0, 0, 0.03);
+}
+
+.dark .liquid-glass {
+  background: rgba(24, 25, 29, 0.78);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+}
+
+/* Subtle elevated surface for the dominant shift card */
+.liquid-glass-elevated {
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.04);
+}
+
+.dark .liquid-glass-elevated {
+  background: #202227;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.5);
+}
+
+/* Hairline specular reflection on top border */
+.specular-border {
+  position: relative;
+}
+
+.specular-border::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.15) 30%, rgba(255, 255, 255, 0.25) 50%, rgba(255, 255, 255, 0.15) 70%, transparent 100%);
+  pointer-events: none;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
+
+/* Clean minimal scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(146, 149, 157, 0.2);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(146, 149, 157, 0.35);
+}
+

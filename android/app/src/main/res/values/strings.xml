@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">TFM Scheduler</string>
+    <string name="title_activity_main">TFM Scheduler</string>
+    <string name="package_name">com.tfm.scheduler</string>
+    <string name="custom_url_scheme">com.tfm.scheduler</string>
+</resources>
