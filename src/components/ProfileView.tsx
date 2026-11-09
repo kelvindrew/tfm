@@ -22,6 +22,7 @@ import {
   Lock,
   LogOut,
   Moon,
+  Palette,
   PhoneCall,
   RotateCcw,
   Shield,
@@ -42,6 +43,7 @@ interface ProfileViewProps {
   onOpenTests?: () => void;
   onOpenAndroidCode?: () => void;
   onOpenPayrollPortal?: () => void;
+  onOpenDesignSystem?: () => void;
   initialSubSection?: 'overview' | 'payslips';
 }
 
@@ -49,6 +51,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
   onOpenTests,
   onOpenAndroidCode,
   onOpenPayrollPortal,
+  onOpenDesignSystem,
   initialSubSection = 'overview',
 }) => {
   const {
@@ -727,7 +730,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
             className="flex-1 min-h-[38px] px-3.5 py-1.5 rounded-xl bg-black/[0.04] dark:bg-white/[0.06] text-[#18191D] dark:text-[#F4F4F5] border border-black/[0.06] dark:border-white/[0.08] text-xs font-semibold flex items-center justify-center gap-2 hover:bg-black/[0.08] active:scale-95 transition"
           >
             <Shield className="w-3.5 h-3.5" strokeWidth={1.5} />
-            <span>Exécuter les Tests & Sécurité (32/32)</span>
+            <span>Tests & Sécurité (37/37)</span>
           </button>
 
           <button
@@ -735,8 +738,18 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
             className="flex-1 min-h-[38px] px-3.5 py-1.5 rounded-xl bg-black/[0.04] dark:bg-white/[0.06] text-[#18191D] dark:text-[#F4F4F5] border border-black/[0.06] dark:border-white/[0.08] text-xs font-semibold flex items-center justify-center gap-2 hover:bg-black/[0.08] active:scale-95 transition"
           >
             <Smartphone className="w-3.5 h-3.5" strokeWidth={1.5} />
-            <span>Code Source Android Studio</span>
+            <span>Code Source Android</span>
           </button>
+
+          {onOpenDesignSystem && (
+            <button
+              onClick={onOpenDesignSystem}
+              className="w-full min-h-[38px] px-3.5 py-1.5 rounded-xl bg-black/[0.04] dark:bg-white/[0.06] text-[#18191D] dark:text-[#F4F4F5] border border-black/[0.06] dark:border-white/[0.08] text-xs font-semibold flex items-center justify-center gap-2 hover:bg-black/[0.08] active:scale-95 transition"
+            >
+              <Palette className="w-3.5 h-3.5" strokeWidth={1.5} />
+              <span>Guide de Style : Components, Templates, Colors & Typo</span>
+            </button>
+          )}
         </div>
       </LiquidGlassCard>
 

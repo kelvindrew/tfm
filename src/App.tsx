@@ -16,6 +16,7 @@ import { AndroidCodeExportModal } from './components/AndroidCodeExportModal';
 import { AdminPayrollPortalModal } from './components/AdminPayrollPortalModal';
 import { AnnouncementsView } from './components/AnnouncementsView';
 import { BottomNavBar } from './components/BottomNavBar';
+import { DesignSystemModal } from './components/DesignSystemModal';
 import { FullCalendar } from './components/FullCalendar';
 import { Header } from './components/Header';
 import { HomeDashboard } from './components/HomeDashboard';
@@ -44,6 +45,7 @@ function MainApp() {
   const [isTestsModalOpen, setIsTestsModalOpen] = useState(false);
   const [isAndroidCodeModalOpen, setIsAndroidCodeModalOpen] = useState(false);
   const [isPayrollPortalOpen, setIsPayrollPortalOpen] = useState(false);
+  const [isDesignSystemModalOpen, setIsDesignSystemModalOpen] = useState(false);
   const [selectedAnnouncement, setSelectedAnnouncement] = useState<Announcement | null>(null);
 
   // Gestion prévisible du bouton Retour Android & historique de navigation
@@ -53,6 +55,10 @@ function MainApp() {
 
     const handlePopState = (e: PopStateEvent) => {
       // 1. Fermer les modales actives si ouvertes
+      if (isDesignSystemModalOpen) {
+        setIsDesignSystemModalOpen(false);
+        return;
+      }
       if (isPayrollPortalOpen) {
         setIsPayrollPortalOpen(false);
         return;
@@ -138,6 +144,7 @@ function MainApp() {
             onOpenTests={() => setIsTestsModalOpen(true)}
             onOpenAndroidCode={() => setIsAndroidCodeModalOpen(true)}
             onOpenPayrollPortal={() => setIsPayrollPortalOpen(true)}
+            onOpenDesignSystem={() => setIsDesignSystemModalOpen(true)}
           />
         )}
       </main>
@@ -155,6 +162,12 @@ function MainApp() {
       <AndroidCodeExportModal
         isOpen={isAndroidCodeModalOpen}
         onClose={() => setIsAndroidCodeModalOpen(false)}
+      />
+
+      {/* Modale du Guide de Style & Design System (Components, Templates, Colors & Typo) */}
+      <DesignSystemModal
+        isOpen={isDesignSystemModalOpen}
+        onClose={() => setIsDesignSystemModalOpen(false)}
       />
 
       {/* Portail RH — Distribution Sécurisée des Bulletins Sage / TIA WFS */}
