@@ -680,7 +680,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
           </div>
           <div className="min-w-0">
             <h4 className="text-xs font-semibold text-[#18191D] dark:text-[#F4F4F5] truncate">Tests & Sécurité</h4>
-            <p className="text-[11px] text-[#71717A] dark:text-[#A1A1AA]">32/32 Validés</p>
+            <p className="text-[11px] text-[#71717A] dark:text-[#A1A1AA]">37/37 Validés</p>
           </div>
         </LiquidGlassCard>
       </div>

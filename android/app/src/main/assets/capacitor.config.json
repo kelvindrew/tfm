@@ -1,5 +1,5 @@
 {
-	"appId": "com.tfm.scheduler",
+	"appId": "cd.tfm.scheduler",
 	"appName": "TFM Scheduler",
 	"webDir": "dist",
 	"server": {

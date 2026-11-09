@@ -5,20 +5,22 @@
   --bg-main: #F4F4F5;
   --bg-secondary: #FFFFFF;
   --bg-surface: #FFFFFF;
-  --text-primary: #18191D;
+  --text-primary: #101114;
   --text-secondary: #71717A;
   --border-subtle: rgba(0, 0, 0, 0.08);
-  --accent-neutral: #71717A;
+  --accent: #777C84;
+  --divider: #E4E4E7;
 }
 
 .dark {
   --bg-main: #101114;
   --bg-secondary: #18191D;
   --bg-surface: #202227;
-  --text-primary: #F4F4F5;
+  --text-primary: #FFFFFF;
   --text-secondary: #A1A1AA;
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --accent-neutral: #A1A1AA;
+  --border-subtle: #34363B;
+  --accent: #777C84;
+  --divider: #34363B;
 }
 
 @layer base {
