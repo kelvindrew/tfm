@@ -1,16 +1,16 @@
 /**
- * TFM SCHEDULER — En-tête Épuré (Apple Minimal)
- * Conforme au système de tokens monochromatiques
+ * TFM SCHEDULER — En-tête Épuré (Apple Minimal Design)
+ * Conforme à la charte monochromatique Joey Banks iOS 16 :
+ * - Fond flouté #101114/90, bordure ultra-fine #34363B
+ * - Typographie San Francisco épurée
+ * - Indicateur de statut réseau & synchronisation discret
  */
 
 import React from 'react';
 import {
   Bell,
   CheckCircle,
-  FileCode2,
   Moon,
-  RotateCw,
-  Smartphone,
   Sun,
   SunMoon,
   User,
@@ -31,17 +31,10 @@ export const Header: React.FC<HeaderProps> = ({
   const {
     themeMode,
     setThemeMode,
-    resolvedTheme,
     systemTheme,
-    isSystemThemeActive,
     isOnline,
-    pendingSyncCount,
     unreadAnnouncementsCount,
     setActiveTab,
-    viewMode,
-    setViewMode,
-    orientation,
-    toggleOrientation,
     user,
   } = useApp();
 
@@ -52,107 +45,78 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full px-4 sm:px-6 pt-safe pb-2.5 bg-[#F4F4F5]/90 dark:bg-[#101114]/90 backdrop-blur-2xl border-b border-black/[0.06] dark:border-white/[0.08] transition-colors">
+    <header className="sticky top-0 z-40 w-full px-4 sm:px-6 pt-safe pb-2.5 bg-[#101114]/90 backdrop-blur-2xl border-b border-[#34363B] transition-colors select-none">
       <div className="max-w-xl mx-auto flex items-center justify-between gap-3">
-        {/* Marque TFM Scheduler minimaliste */}
+        {/* Logo & Titre officiel */}
         <div className="flex items-center gap-2.5 shrink-0">
-          <div className="w-8 h-8 rounded-xl bg-[#18191D] dark:bg-[#F4F4F5] text-white dark:text-[#101114] flex items-center justify-center font-bold text-xs tracking-wider select-none font-mono shadow-xs">
+          <div className="w-8 h-8 rounded-xl bg-white text-[#101114] flex items-center justify-center font-bold text-xs tracking-wider select-none font-mono shadow-sm">
             TF
           </div>
           <div className="leading-tight">
-            <span className="text-sm font-bold tracking-tight text-[#18191D] dark:text-[#F4F4F5] block">
+            <span className="text-sm font-bold tracking-tight text-white block">
               TFM Scheduler
             </span>
-            <span className="text-[10px] text-zinc-500 font-mono block">
+            <span className="text-[10px] text-[#A1A1AA] font-mono block">
               Tenke Fungurume Mining
             </span>
           </div>
         </div>
 
-        {/* Indicateur de statut réseau & synchronisation discret */}
-        <div className="flex items-center gap-2 text-xs text-[#71717A] dark:text-[#A1A1AA]">
-          <span className="flex items-center gap-1.5 font-medium px-2 py-0.5 rounded-full bg-black/[0.03] dark:bg-white/[0.05] border border-black/[0.04] dark:border-white/[0.05]">
+        {/* Indicateur de connectivité en ligne */}
+        <div className="flex items-center gap-2 text-xs text-[#A1A1AA]">
+          <span className="flex items-center gap-1.5 font-medium px-2.5 py-1 rounded-full bg-[#202227] border border-[#34363B]">
             <span
               className={`inline-block w-1.5 h-1.5 rounded-full ${
-                isOnline ? 'bg-emerald-500' : 'bg-amber-500'
+                isOnline ? 'bg-emerald-400' : 'bg-amber-400'
               }`}
             />
-            <span className="text-[10px] font-mono">{isOnline ? 'En ligne' : 'Hors-ligne'}</span>
+            <span className="text-[10px] font-mono text-white">{isOnline ? 'En ligne' : 'Hors-ligne'}</span>
           </span>
         </div>
 
-        {/* Outils & Actions sobres */}
+        {/* Actions & Raccourcis */}
         <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
-          {/* Tests du moteur (discret sur desktop) */}
-          <button
-            onClick={onOpenTests}
-            title="Exécuter les tests du moteur de rotation"
-            className="hidden md:flex min-h-[36px] px-2.5 py-1 items-center gap-1.5 rounded-lg text-xs font-medium text-[#71717A] dark:text-[#A1A1AA] hover:text-[#18191D] dark:hover:text-[#F4F4F5] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition"
-          >
-            <CheckCircle className="w-3.5 h-3.5 text-emerald-500/90" strokeWidth={1.5} />
-            <span>Tests</span>
-          </button>
-
-          {/* Portail RH — Distribution des Bulletins */}
+          {/* Portail RH */}
           {onOpenPayrollPortal && (
             <button
               onClick={onOpenPayrollPortal}
               title="Portail RH — Importation & Distribution des Bulletins"
-              className="hidden sm:flex min-h-[36px] px-2.5 py-1 items-center gap-1.5 rounded-lg text-xs font-semibold text-[#18191D] dark:text-[#F4F4F5] bg-black/[0.04] dark:bg-white/[0.06] hover:bg-black/[0.08] transition"
+              className="hidden sm:flex min-h-[34px] px-2.5 py-1 items-center gap-1.5 rounded-lg text-xs font-semibold text-white bg-[#202227] border border-[#34363B] hover:border-[#777C84] transition"
             >
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>Portail RH</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+              <span>RH</span>
             </button>
           )}
 
-          {/* Basculeur de thème avec détection automatique du système */}
+          {/* Tests du moteur */}
           <button
-            onClick={toggleTheme}
-            title={
-              themeMode === 'system'
-                ? `Thème Automatique : suit le système (${systemTheme === 'dark' ? 'Sombre' : 'Clair'})`
-                : `Thème Fixe : ${themeMode === 'dark' ? 'Sombre' : 'Clair'} (Cliquez pour basculer)`
-            }
-            className={`min-h-[38px] px-2 flex items-center gap-1 rounded-lg transition ${
-              themeMode === 'system'
-                ? 'text-blue-600 dark:text-blue-400 bg-blue-500/10'
-                : 'text-[#71717A] dark:text-[#A1A1AA] hover:text-[#18191D] dark:hover:text-[#F4F4F5] hover:bg-black/[0.04] dark:hover:bg-white/[0.06]'
-            }`}
-            aria-label="Basculer le thème"
+            onClick={onOpenTests}
+            title="Exécuter les tests du moteur de rotation"
+            className="hidden md:flex min-h-[34px] px-2.5 py-1 items-center gap-1.5 rounded-lg text-xs font-medium text-[#A1A1AA] hover:text-white hover:bg-[#202227] transition border border-transparent hover:border-[#34363B]"
           >
-            {themeMode === 'system' ? (
-              <>
-                <SunMoon className="w-4 h-4" strokeWidth={1.5} />
-                <span className="text-[10px] font-mono font-semibold hidden sm:inline">
-                  Auto
-                </span>
-              </>
-            ) : themeMode === 'light' ? (
-              <Sun className="w-4 h-4 text-amber-500" strokeWidth={1.5} />
-            ) : (
-              <Moon className="w-4 h-4" strokeWidth={1.5} />
-            )}
+            <CheckCircle className="w-3.5 h-3.5 text-emerald-400" strokeWidth={1.5} />
+            <span>37 Tests</span>
           </button>
 
-          {/* Notifications discrètes */}
+          {/* Notifications */}
           <button
             onClick={() => setActiveTab('announcements')}
             title="Annonces professionnelles"
-            className="relative min-h-[38px] min-w-[38px] flex items-center justify-center rounded-lg text-[#71717A] dark:text-[#A1A1AA] hover:text-[#18191D] dark:hover:text-[#F4F4F5] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition"
+            className="relative min-h-[36px] min-w-[36px] flex items-center justify-center rounded-xl bg-[#202227] border border-[#34363B] text-[#A1A1AA] hover:text-white hover:border-[#777C84] transition"
           >
-            <Bell className="w-4 h-4" strokeWidth={1.5} />
+            <Bell className="w-4 h-4" />
             {unreadAnnouncementsCount > 0 && (
-              <span className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-[#18191D] dark:bg-[#F4F4F5] ring-1 ring-white dark:ring-[#101114]" />
+              <span className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-white ring-2 ring-[#202227]" />
             )}
           </button>
 
-          {/* Profil utilisateur rapide */}
+          {/* Profil */}
           <button
             onClick={() => setActiveTab('profile')}
             title={`Profil de ${user.fullName}`}
-            className="min-h-[38px] min-w-[38px] flex items-center justify-center rounded-lg text-[#71717A] dark:text-[#A1A1AA] hover:text-[#18191D] dark:hover:text-[#F4F4F5] hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition ml-0.5"
+            className="min-h-[36px] min-w-[36px] flex items-center justify-center rounded-xl bg-[#202227] border border-[#34363B] text-[#A1A1AA] hover:text-white hover:border-[#777C84] transition"
           >
-            <User className="w-4 h-4" strokeWidth={1.5} />
+            <User className="w-4 h-4" />
           </button>
         </div>
       </div>

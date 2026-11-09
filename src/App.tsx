@@ -106,7 +106,7 @@ function MainApp() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F4F4F5] dark:bg-[#101114] text-[#18191D] dark:text-[#F4F4F5] transition-colors flex flex-col items-center">
+    <div className="min-h-screen bg-[#101114] text-white flex flex-col items-center">
       {/* Barre de contrôle supérieure épurée */}
       <Header
         onOpenTests={() => setIsTestsModalOpen(true)}

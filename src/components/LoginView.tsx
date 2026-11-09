@@ -118,7 +118,7 @@ export const LoginView: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center p-3.5 sm:p-4 bg-[#F4F4F5] dark:bg-[#101114] text-[#18191D] dark:text-[#F4F4F5] select-none">
+    <div className="min-h-screen w-full flex items-center justify-center p-3.5 sm:p-4 bg-[#101114] text-white select-none">
       <div className="w-full max-w-sm space-y-5 my-auto">
         {/* En-tête de marque sobre */}
         <div className="text-center space-y-1.5">

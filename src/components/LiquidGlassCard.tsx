@@ -1,6 +1,10 @@
 /**
- * TFM SCHEDULER — Composant de Surface Liquid Glass & Surfaces Minimalistes
- * Conforme au système monochromatique Apple / visionOS
+ * TFM SCHEDULER — Composant de Surface Apple Minimal (Inset Grouped Card)
+ * Conforme aux jetons stricts :
+ * - Surface : #202227
+ * - Bordure : #34363B
+ * - Texte primaire : #FFFFFF
+ * - Texte secondaire : #A1A1AA
  */
 
 import React from 'react';
@@ -20,27 +24,19 @@ export const LiquidGlassCard: React.FC<LiquidGlassCardProps> = ({
   onClick,
   interactive = false,
 }) => {
-  // Styles de surfaces monochromatiques stricts
   const variantStyles = {
-    // Surface primaire solide (haute lisibilité, contraste optimal)
     default:
-      'bg-white dark:bg-[#18191D] border border-black/[0.06] dark:border-white/[0.08] text-[#18191D] dark:text-[#F4F4F5] shadow-[0_1px_4px_-1px_rgba(0,0,0,0.03)] dark:shadow-[0_4px_16px_-4px_rgba(0,0,0,0.4)]',
-    
-    // Surface Liquid Glass translucide avec flou maîtrisé (utilisée avec parcimonie)
+      'bg-[#202227] border border-[#34363B] text-white shadow-sm',
     glass:
-      'liquid-glass text-[#18191D] dark:text-[#F4F4F5]',
-
-    // Surface surélevée (utilisée pour la carte maîtresse de rotation)
+      'bg-[#202227]/90 backdrop-blur-xl border border-[#34363B] text-white',
     elevated:
-      'liquid-glass-elevated specular-border text-[#18191D] dark:text-[#F4F4F5]',
-
-    // Surface discrète pour conteneurs secondaires ou éléments imbriqués
+      'bg-[#202227] border border-[#34363B] text-white shadow-md',
     subtle:
-      'bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.04] dark:border-white/[0.05] text-[#18191D] dark:text-[#F4F4F5]',
+      'bg-[#101114] border border-[#34363B] text-white',
   }[variant];
 
   const interactiveStyles = interactive || onClick
-    ? 'cursor-pointer active:scale-[0.99] transition duration-150 hover:border-black/15 dark:hover:border-white/20'
+    ? 'cursor-pointer active:scale-[0.99] transition duration-150 hover:border-[#777C84]'
     : '';
 
   return (
